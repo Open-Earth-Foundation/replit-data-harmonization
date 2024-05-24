@@ -345,6 +345,7 @@ def generate_transformation(messages):
     logging.debug("MESSAGES", messages[0]['content'] )
 
 
+
     response = client.chat.completions.create(
         model="gpt-4o",
         messages=messages,
