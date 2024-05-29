@@ -1,5 +1,6 @@
 .app.env
 .vscode
+app/__pycache__/
 
 # Logs
 logs
