@@ -1,4 +1,4 @@
-name: Push API to latest on GHCR
+name: Push frontend to latest on GHCR
 on:
   workflow_dispatch:
   push:
