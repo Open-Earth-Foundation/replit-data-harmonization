@@ -1,0 +1,31 @@
+name: Push API to latest on GHCR
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - app/**
+      - .github/workflows/app-develop.yml
+    branches: ["main"]
+
+jobs:
+  pushToGHCR:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pushing app to GHCR
+        env:
+          VERSION: ${{ github.sha }}
+          IMAGE: ghcr.io/open-earth-foundation/replit-data-harmonization-app
+        run: |
+          docker build -t $IMAGE:$VERSION app
+          docker tag $IMAGE:$VERSION $IMAGE:latest
+          docker push $IMAGE:$VERSION
+          docker push $IMAGE:latest
